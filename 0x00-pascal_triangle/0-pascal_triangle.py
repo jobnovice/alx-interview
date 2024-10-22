@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """Blaire pascal's number immplemented"""
 
+
 def pascal_triangle(n):
     """pascal_triangle implemented using python"""
     new_list = []
@@ -14,4 +15,4 @@ def pascal_triangle(n):
             elif i > j:
                 row.append(new_list[i-1][j-1] + new_list[i-1][j])
         new_list.append(row)
-    return new_list                 
+    return new_list
