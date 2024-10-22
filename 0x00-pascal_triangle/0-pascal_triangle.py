@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 """Blaire pascal's number immplemented"""
 
 def pascal_triangle(n):
