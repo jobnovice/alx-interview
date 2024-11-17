@@ -1,25 +1,43 @@
 #!/usr/bin/node
-// A script that prints all characters of a Star Wars movie
 
 const request = require('request');
 
-const movie = process.argv[2];
-const api = 'https://swapi-api.hbtn.io/api/';
-const url = api + 'films/' + movie + '/';
-request.get({ url: url }, function (error, response, body) {
-  if (!error) {
-    const characters = JSON.parse(body).characters;
-    order(characters);
+// Get the Movie ID from the command line arguments
+const movieId = process.argv[2];
+
+if (!movieId) {
+  console.log('Usage: ./0-starwars_characters.js <Movie ID>');
+  process.exit(1);
+}
+
+// API URL for the specific movie (ensure correct URL format for your project)
+const url = `https://swapi-api.alx-tools.com/api/films/${movieId}/`;
+
+request(url, function (error, response, body) {
+  if (error) {
+    console.error('Error:', error);
+    return;
+  }
+
+  if (response.statusCode === 200) {
+    const film = JSON.parse(body);
+    const characters = film.characters;
+
+    // Fetch and print each character's name in order
+    characters.forEach(function (characterUrl) {
+      request(characterUrl, function (error, response, body) {
+        if (error) {
+          console.error('Error:', error);
+          return;
+        }
+
+        if (response.statusCode === 200) {
+          const character = JSON.parse(body);
+          console.log(character.name);
+        }
+      });
+    });
+  } else {
+    console.log('Movie not found');
   }
 });
-
-function order (characters) {
-  if (characters.length > 0) {
-    request.get({ url: characters.shift() }, function (err, res, body) {
-      if (!err) {
-        console.log(JSON.parse(body).name);
-        order(characters);
-      }
-    });
-  }
-}
