@@ -1,43 +1,20 @@
 #!/usr/bin/node
 
-const request = require('request');
+import fetch from 'node-fetch';
 
-// Get the Movie ID from the command line arguments
-const movieId = process.argv[2];
+const movie = process.argv[2];
 
-if (!movieId) {
-  console.log('Usage: ./0-starwars_characters.js <Movie ID>');
-  process.exit(1);
-}
+const url = `https://swapi-api.alx-tools.com/api/films/${movie}`;
 
-// API URL for the specific movie (ensure correct URL format for your project)
-const url = `https://swapi-api.alx-tools.com/api/films/${movieId}/`;
-
-request(url, function (error, response, body) {
-  if (error) {
-    console.error('Error:', error);
-    return;
+fetch(url)
+  .then(res => res.json())
+  .then(data => {
+    for (const i of data.characters) {
+      fetch(i)
+        .then(resp => resp.json())
+        .then(charc => console.log(charc.name))
+        .catch(error => console.error(error));
+    }
   }
-
-  if (response.statusCode === 200) {
-    const film = JSON.parse(body);
-    const characters = film.characters;
-
-    // Fetch and print each character's name in order
-    characters.forEach(function (characterUrl) {
-      request(characterUrl, function (error, response, body) {
-        if (error) {
-          console.error('Error:', error);
-          return;
-        }
-
-        if (response.statusCode === 200) {
-          const character = JSON.parse(body);
-          console.log(character.name);
-        }
-      });
-    });
-  } else {
-    console.log('Movie not found');
-  }
-});
+  )
+  .catch(error => console.error(error));
