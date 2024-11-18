@@ -9,12 +9,18 @@ const url = `https://swapi-api.alx-tools.com/api/films/${movie}`;
 fetch(url)
   .then(res => res.json())
   .then(data => {
-    for (const i of data.characters) {
+    // Collect promises to fetch character data
+    const characterPromises = data.characters.map(i => 
       fetch(i)
         .then(resp => resp.json())
-        .then(charc => console.log(charc.name))
-        .catch(error => console.error(error));
-    }
-  }
-  )
+        .then(charc => charc.name)
+        .catch(error => console.error(error))
+    );
+
+    // Wait for all promises to resolve and log character names in order
+    return Promise.all(characterPromises);
+  })
+  .then(characterNames => {
+    characterNames.forEach(name => console.log(name));
+  })
   .catch(error => console.error(error));
