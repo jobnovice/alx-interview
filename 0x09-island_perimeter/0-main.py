@@ -22,4 +22,33 @@ if __name__ == "__main__":
         [0, 0, 0, 0, 0, 0],
     ]
    
-    print(island_perimeter(grid2)) 
+    print(island_perimeter(grid2))
+
+
+    grid3 = [
+            [0, 0, 0, 0, 0, 0],
+            [0, 1, 1, 1, 0, 0],
+            [0, 1, 1, 1, 0, 0],
+            [0, 1, 1, 1, 0, 0]
+            ]
+    
+    print(f'perimeter for grid3: {island_perimeter(grid3)}')
+    grid4 = [[0, 1, 0, 0, 0, 1],
+             [1, 1, 0, 0, 0, 1],
+             [1, 1, 0, 1, 1, 1],
+             [0, 1, 1, 1, 0, 0],
+             [0, 0, 1, 1, 0, 0]
+             ]
+    print(f'perimeter for grid4: {island_perimeter(grid4)}')
+
+    grid5 = [[0, 0, 0, 0, 0, 0],
+             [0, 1, 1, 0, 0, 0],
+             [1, 1, 1, 0, 0, 0],
+             [0, 1, 1, 1, 0, 0],
+             [0, 0, 0, 1, 1, 1]
+             ]
+
+
+    print(f'perimeter for grid5: {island_perimeter(grid5)}')
+
+

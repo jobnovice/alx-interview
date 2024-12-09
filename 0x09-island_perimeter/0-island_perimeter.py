@@ -7,12 +7,14 @@ def island_perimeter(grid):
     """calculates the gird and returns the perimeter of the island."""
     peri = 0
     if grid is None:
-        return None
+        return 0
     for row in range(len(grid)):
         for col in range(len(grid[row])):
+            if grid[row][0] != 0 or grid[0][col] != 0:
+                return 0
             if type(grid[row][col]) is not int:
                 raise TypeError("invalid type of data.")
-                return None
+                return 0
             if grid[row][col] < 0:
                 raise ValueError("invalid value for the grid.")
                 return
