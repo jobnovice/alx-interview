@@ -1,26 +1,23 @@
 #!/usr/bin/python3
-"""calculates the perimeter of an island that's surronded by lakes and
-also has lakes inside of it too."""
+"""
+A module: defines a function that calculates
+the perimeter of an island on a given grid
+"""
 
 
 def island_perimeter(grid):
-    """calculates the gird and returns the perimeter of the island."""
-    peri = 0
-    if grid is None:
-        return 0
-    for row in range(len(grid)):
-        for col in range(len(grid[row])):
-            if grid[row][0] != 0 or grid[0][col] != 0:
-                return 0
-            if type(grid[row][col]) is not int:
-                raise TypeError("invalid type of data.")
-                return 0
-            if grid[row][col] < 0:
-                raise ValueError("invalid value for the grid.")
-                return
-            if grid[row][col] == 0:
-                continue
-            else:
-                peri += 1
-    peri += 1
-    return peri * 2
+    """
+    Returns the perimeter of any notable island in the given grid
+    """
+    length = len(grid)
+    breath = len(grid[0])
+    perimeter = 0
+    for x in range(length):
+        for y in range(breath):
+            if grid[x][y] == 1:
+                perimeter += 4
+                if (y < breath - 1 and grid[x][y + 1] == 1):
+                    perimeter -= 2
+                if (x < length - 1 and grid[x + 1][y] == 1):
+                    perimeter -= 2
+    return perimeter
